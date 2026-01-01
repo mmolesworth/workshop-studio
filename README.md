@@ -2,8 +2,6 @@
 
 A modern, interactive learning platform built from scratch to deliver structured technical workshops and courses. This project served as my deep dive into React development and AWS Cloudscape Design System, resulting in a professional-grade educational platform with comprehensive progress tracking.
 
-![Workshop Studio](public/agiliko-logo.png)
-
 > **Live Demo**: Coming soon - currently in development
 
 ## 🎯 Project Overview
