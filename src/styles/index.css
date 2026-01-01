@@ -1,0 +1,14 @@
+html {
+  font-size: 200%; /* Scales 16px base to 18px */
+}
+
+/* Right-align navigation checkmarks to nav pane edge */
+[class*="awsui_list-item_"] {
+  position: relative;
+}
+
+[class*="awsui_list-item_"] > [class*="awsui_info_"] {
+  position: absolute;
+  right: 8px;
+}
+
