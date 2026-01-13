@@ -1,0 +1,4 @@
+version: "1.0"
+workshops:
+  - id: sample-workshop
+    path: sample-workshop/workshop.yaml

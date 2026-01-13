@@ -1,0 +1,159 @@
+id: first-steps
+title: First Steps
+description: Hands-on examples with code, steps, and a quiz.
+order: 2
+estimatedMinutes: 10
+
+content:
+  - type: text
+    markdown: |
+      # First Steps
+
+      This lesson demonstrates more content block types. Let's start 
+      with a code example.
+
+  - type: expandable
+    header: Learn More (Optional)
+    defaultExpanded: false
+    content:
+      - type: text
+        markdown: |
+          This content is hidden by default. Click the header to expand it!
+
+      - type: alert
+        alertType: info
+        content: |
+          Expandable sections are great for optional or advanced content.
+
+      - type: code
+        language: javascript
+        title: Hello World Example
+        code: |
+          function greet(name) {
+            return `Hello, ${name}!`;
+          }
+
+          console.log(greet('Workshop'));
+
+  - type: alert
+    alertType: warning
+    header: Important Note
+    content: |
+      This is a warning alert. Use these to highlight important 
+      cautions or things to watch out for.
+
+  - type: text
+    markdown: |
+      ## Step-by-Step Instructions
+
+      The steps component is great for procedures and tutorials.
+
+  - type: image
+    src: /content/sample-workshop/assets/image.webp
+    alt: Sample architecture diagram
+    caption: This is a sample image caption
+    width: 500
+
+  - type: expandable
+    header: See the amazing Rick Astley!
+    defaultExpanded: false
+    content:
+      - type: video
+        src: https://www.youtube.com/embed/dQw4w9WgXcQ
+        title: Sample Video
+        aspectRatio: 16:9
+
+  - type: divider
+
+  - type: table
+    header: AWS Serverless Services
+    columns:
+      - key: service
+        header: Service
+      - key: purpose
+        header: Purpose
+      - key: pricing
+        header: Pricing Model
+    rows:
+      - service: Lambda
+        purpose: Run code without servers
+        pricing: Per request + duration
+      - service: API Gateway
+        purpose: Create HTTP endpoints
+        pricing: Per request
+      - service: DynamoDB
+        purpose: NoSQL database
+        pricing: Per request + storage
+
+  - type: divider
+
+  - type: steps
+    title: Setting Up Your Environment
+    steps:
+      - title: Install Dependencies
+        description: |
+          Run the following command in your terminal:
+          ```bash
+            npm install
+          ```
+
+      - title: Start the Development Server
+        description: |
+          Launch the app with:
+          ```bash
+            npm run dev
+          ```
+
+      - title: Open Your Browser
+        description: |
+          Navigate to `http://localhost:5173` to see the app running.
+
+  - type: divider
+
+  - type: text
+    markdown: |
+      ## Knowledge Check
+
+      Let's test your understanding with a quick quiz.
+
+  - type: quiz
+    id: sample-quiz-1
+    questionType: single
+    question: What function is used to parse YAML in our content service?
+    hint: Think about the library we installed.
+    options:
+      - id: a
+        text: yaml.parse()
+      - id: b
+        text: yaml.load()
+        correct: true
+      - id: c
+        text: JSON.parse()
+      - id: d
+        text: yaml.read()
+    explanation: |
+      **Correct!** The `js-yaml` library provides the `yaml.load()` function 
+      to parse YAML text into JavaScript objects.
+
+  - type: text
+    markdown: |
+      ## Summary
+
+      In this lesson, you saw examples of:
+
+      - Code blocks with syntax highlighting
+      - Warning alerts
+      - Step-by-step instructions
+      - Interactive quizzes
+
+      Great job completing the sample workshop!
+
+  - type: text
+    markdown: |
+      ## Helpful Resources
+
+      Check out the [AWS Lambda documentation](https://docs.aws.amazon.com/lambda) 
+      for more details.
+
+      You can also review our [getting started guide](/lesson/getting-started/welcome) 
+      for the basics.

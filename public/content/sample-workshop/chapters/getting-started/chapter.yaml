@@ -1,0 +1,10 @@
+id: getting-started
+title: Getting Started
+description: Introduction to the workshop and first steps.
+order: 1
+
+lessons:
+  - id: welcome
+    path: lessons/welcome.yaml
+  - id: first-steps
+    path: lessons/first-steps.yaml

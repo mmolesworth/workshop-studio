@@ -1,0 +1,40 @@
+id: welcome
+title: Welcome to the Workshop
+description: An introduction to what you'll learn.
+order: 1
+estimatedMinutes: 5
+
+content:
+  - type: text
+    markdown: |
+      # Welcome!
+
+      This is a sample workshop designed to test the content loading 
+      and rendering system.
+
+      ## What You'll Learn
+
+      In this workshop, you'll see examples of different content block 
+      types and how they render using Cloudscape components.
+
+  - type: alert
+    alertType: info
+    header: Before You Begin
+    content: |
+      This is an informational alert. It uses the Cloudscape Alert 
+      component with the "info" type.
+
+  - type: text
+    markdown: |
+      ## Content Block Types
+
+      The content system supports various block types including text, 
+      alerts, code snippets, step-by-step instructions, quizzes, and more.
+
+      Let's continue to the next lesson to see more examples.
+
+  - type: alert
+    alertType: success
+    content: |
+      You've reached the end of this lesson. Continue to "First Steps" 
+      to see more content block types in action.

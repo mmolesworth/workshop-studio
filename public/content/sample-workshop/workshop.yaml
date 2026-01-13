@@ -1,0 +1,21 @@
+id: sample-workshop
+version: "1.0"
+title: Sample Workshop
+description: >
+  A sample workshop to test the content loading system.
+  This workshop demonstrates various content block types.
+
+metadata:
+  author: Mark
+  level: beginner
+  duration: 30
+  lastUpdated: 2025-01-11
+  tags:
+    - sample
+    - testing
+  prerequisites:
+    - None
+
+chapters:
+  - id: getting-started
+    path: chapters/getting-started/chapter.yaml

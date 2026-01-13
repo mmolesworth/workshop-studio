@@ -13,6 +13,7 @@ import { workshop } from './data/workshop';
 import { useProgress } from './context/ProgressContext';
 import { applyMode, Mode } from '@cloudscape-design/global-styles';
 import { useState } from 'react';
+import { ContentTest } from './components/ContentTest';
 
 // Switch to dark mode
 applyMode(Mode.Dark);
@@ -21,6 +22,7 @@ applyMode(Mode.Dark);
 applyMode(Mode.Light);
 
 function App() {
+    
     const navigate = useNavigate();
     const location = useLocation();
     const { isComplete } = useProgress();
@@ -107,6 +109,7 @@ function App() {
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/lesson/:chapterId/:lessonId" element={<LessonPage />} />
+                            <Route path="/test" element={ <ContentTest />} />
                         </Routes>
                     }
                     toolsHide={true}

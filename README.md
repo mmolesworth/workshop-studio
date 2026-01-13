@@ -12,31 +12,34 @@ Built entirely from the ground up as a learning project to master React and expl
 
 ### 🎯 Core Learning Experience
 
-- **Structured Content Delivery** - Organized chapters and lessons with markdown rendering
+- **YAML-Based Content System** - Structured content delivery using YAML configuration files for workshops, chapters, and lessons
+- **Modular Content Blocks** - Rich content system with 10+ block types (text, alerts, code, steps, quizzes, etc.)
 - **Progress Tracking** - Automatic lesson completion detection with persistent storage
 - **Smart Navigation** - Resume where you left off, breadcrumb navigation, and completion indicators
 - **Responsive Design** - Built with AWS Cloudscape Design System for enterprise-grade UI
 
-### 📚 Content Features
+### 📚 Content Management
 
-- **Markdown Support** - Rich content with GitHub Flavored Markdown (tables, code blocks, syntax highlighting)
-- **Interactive Elements** - Progress indicators, navigation buttons, and completion alerts
-- **Multi-Workshop Ready** - Architecture supports multiple workshop content with independent progress tracking
+- **Content Service Layer** - Centralized content loading with caching and error handling
+- **Block-Based Architecture** - Reusable content components (TextBlock, AlertBlock, CodeBlock, StepsBlock, etc.)
+- **Multi-Workshop Support** - Complete workshop management system with metadata and structure
+- **Dynamic Content Loading** - On-demand lesson loading with React hooks (useLesson, useWorkshop)
 
 ### 🎨 User Experience
 
 - **Dark/Light Mode** - Automatic theme switching with custom color schemes
 - **Accessibility First** - Built on Cloudscape components with strong a11y support
-- **Scroll-Based Completion** - Lessons automatically marked complete when fully read
+- **Content Renderer** - Flexible rendering system that handles nested content blocks
 - **Progress Analytics** - Visual progress tracking with completion statistics
 
 ## 🚀 Tech Stack
 
 - **Frontend**: React 19.2.3 with React Router DOM
-- **UI Framework**: AWS Cloudscape Design System
+- **UI Framework**: AWS Cloudscape Design System (@cloudscape-design/components ^3.0.1165)
 - **Build Tool**: Vite 7.3.0 with Fast Refresh
-- **Content**: React Markdown with GitHub Flavored Markdown
-- **State Management**: React Context API
+- **Content Management**: YAML-based content system with js-yaml parser
+- **Content Rendering**: Modular block system with React Markdown integration
+- **State Management**: React Context API with custom hooks
 - **Storage**: LocalStorage for progress persistence
 - **Styling**: Custom Cloudscape theming with responsive design
 
@@ -49,13 +52,35 @@ src/
 ├── theme.js                # Custom Cloudscape theme
 ├── context/
 │   └── ProgressContext.jsx # Global progress state management
+├── services/
+│   └── contentService.js   # YAML content loading & caching
+├── hooks/
+│   ├── useProgress.js      # Progress management utilities
+│   ├── useLesson.js        # Lesson content loading hook
+│   └── useWorkshop.js      # Workshop structure loading hook
+├── components/
+│   ├── ContentTest.jsx     # Content testing component
+│   └── content/
+│       ├── ContentRenderer.jsx  # Block rendering engine
+│       └── blocks/             # Content block components
+│           ├── TextBlock.jsx   # Markdown text rendering
+│           ├── AlertBlock.jsx  # Alert/notification blocks
+│           ├── CodeBlock.jsx   # Code syntax highlighting
+│           ├── StepsBlock.jsx  # Step-by-step instructions
+│           ├── QuizBlock.jsx   # Interactive quizzes
+│           └── [8 more blocks] # Additional content types
 ├── pages/
 │   ├── HomePage.jsx        # Workshop overview & progress
 │   └── LessonPage.jsx      # Individual lesson display
-├── data/
-│   └── workshop.js         # Workshop content structure
-└── hooks/
-    └── useProgress.js      # Progress management utilities
+└── data/
+    └── workshop.js         # Legacy workshop structure
+
+public/content/             # YAML content files
+├── index.yaml             # Workshop registry
+└── sample-workshop/       # Workshop content structure
+    ├── workshop.yaml      # Workshop metadata
+    ├── chapters/          # Chapter definitions
+    └── assets/            # Workshop assets
 ```
 
 ## 🛠️ Installation & Setup
@@ -99,10 +124,21 @@ src/
 
 ### For Content Creators
 
-1. Edit `src/data/workshop.js` to add new chapters and lessons
-2. Use markdown format for lesson content with full GFM support
-3. The platform automatically handles navigation and progress tracking
-4. Customize themes in `src/theme.js` for different branding
+The platform now uses a YAML-based content management system:
+
+1. **Workshop Structure**: Define workshops in `public/content/[workshop-id]/workshop.yaml`
+2. **Content Blocks**: Use modular content blocks for rich, interactive lessons
+3. **Available Block Types**:
+   - `text`: Markdown content with Cloudscape styling
+   - `alert`: Notifications and callouts
+   - `code`: Syntax-highlighted code blocks
+   - `steps`: Step-by-step instructions
+   - `quiz`: Interactive quizzes
+   - `image`, `video`, `table`: Media and data blocks
+   - `expandable`, `divider`: Layout and organization
+
+4. **Content Service**: Automatic caching and error handling for all content
+5. **Testing Route**: Use `/test` route to preview content during development
 
 ## 🎨 Customization
 
@@ -117,29 +153,73 @@ The app uses a custom Cloudscape theme with:
 
 ### Adding New Workshops
 
-```javascript
-// src/data/workshop.js
-export const workshop = {
-  id: "your-workshop-id",
-  title: "Your Workshop Title",
-  description: "Workshop description",
-  chapters: [
-    {
-      id: "ch1",
-      title: "Chapter Title",
-      lessons: [
-        {
-          id: "l1",
-          title: "Lesson Title",
-          content: `# Your Markdown Content Here`,
-        },
-      ],
-    },
-  ],
-};
+Create a new workshop using the YAML structure:
+
+```yaml
+# public/content/my-workshop/workshop.yaml
+id: my-workshop
+version: "1.0"
+title: "My Workshop Title"
+description: "Workshop description"
+
+metadata:
+  author: "Your Name"
+  level: beginner
+  duration: 60
+  tags: ["tag1", "tag2"]
+
+chapters:
+  - id: chapter-1
+    path: chapters/chapter-1/chapter.yaml
+```
+
+```yaml
+# public/content/my-workshop/chapters/chapter-1/lessons/lesson-1.yaml
+id: lesson-1
+title: "Lesson Title"
+description: "Lesson description"
+
+content:
+  - type: text
+    markdown: |
+      # Welcome to the lesson
+      This is **markdown** content.
+
+  - type: alert
+    type: info
+    header: "Important Note"
+    content: "This is an alert block."
+
+  - type: code
+    language: javascript
+    code: |
+      console.log("Hello, World!");
+```
+
+Register your workshop in `public/content/index.yaml`:
+
+```yaml
+version: "1.0"
+workshops:
+  - id: my-workshop
+    path: my-workshop/workshop.yaml
 ```
 
 ## 🔧 Key Technical Achievements
+
+### YAML-Based Content Management System
+
+- **Structured Content Architecture**: Complete migration from hardcoded content to flexible YAML-based system
+- **Content Service Layer**: Centralized content loading with intelligent caching and error handling
+- **Modular Block System**: 10+ reusable content block components for rich, interactive lessons
+- **Dynamic Loading**: On-demand content fetching with React hooks for optimal performance
+
+### Advanced Content Rendering
+
+- **ContentRenderer Engine**: Flexible rendering system that handles nested content blocks and unknown types gracefully
+- **Block Component Library**: Comprehensive set of content blocks (TextBlock, AlertBlock, CodeBlock, StepsBlock, QuizBlock, etc.)
+- **Markdown Integration**: Enhanced markdown rendering with Cloudscape Link components and external link detection
+- **Content Testing**: Dedicated testing route (`/test`) for content development and validation
 
 ### AWS Cloudscape Design System Mastery
 
@@ -151,8 +231,9 @@ export const workshop = {
 ### React Architecture & State Management
 
 - **Modern React Patterns**: Functional components with hooks, Context API for global state, and efficient re-rendering strategies
-- **Custom Progress Tracking**: Built sophisticated scroll-based completion detection with persistent LocalStorage integration
+- **Custom Hook Library**: Specialized hooks for content loading (useLesson, useWorkshop) and progress tracking
 - **Smart Navigation Logic**: Implemented "resume where you left off" functionality with breadcrumb navigation and completion indicators
+- **Error Boundary Handling**: Graceful error handling throughout the content loading pipeline
 
 ### Performance & Developer Experience
 
@@ -160,13 +241,36 @@ export const workshop = {
 - **Component Architecture**: Scalable structure supporting multiple workshops with independent progress tracking
 - **Theme System**: Custom Cloudscape theme with dark/light mode support and responsive design tokens
 
+## 🚧 Recent Updates & Enhancements
+
+### Content Management System Overhaul
+
+- **YAML-Based Architecture**: Complete migration from hardcoded JavaScript content to flexible YAML configuration system
+- **Content Service Layer**: New `contentService.js` with intelligent caching, error handling, and parallel loading
+- **Modular Content Blocks**: Implemented 10+ content block types for rich, interactive learning experiences
+- **Dynamic Content Loading**: React hooks (`useLesson`, `useWorkshop`) for efficient, on-demand content fetching
+
+### Enhanced Developer Experience
+
+- **Content Testing Route**: Added `/test` route for content development and validation
+- **Block Component Library**: Comprehensive set of reusable content components with consistent Cloudscape styling
+- **Error Handling**: Graceful handling of missing content, unknown block types, and network failures
+- **Content Caching**: In-memory caching system to optimize performance and reduce redundant requests
+
 ## 🚧 Planned Enhancements
+
+### Content Management Evolution
+
+- **Visual Content Editor**: Rich WYSIWYG editor for creating and editing YAML content blocks
+- **Content Validation**: Schema validation for YAML content with helpful error messages
+- **Asset Management**: Integrated asset upload and management for images, videos, and documents
+- **Content Versioning**: Version control for workshop content with rollback capabilities
 
 ### Administrative Dashboard (In Development)
 
 - **Workshop Management**: Create, edit, and manage workshop content through an intuitive admin interface
-- **Content Editor**: Rich markdown editor for creating lessons with live preview
-- **Workshop Templates**: Reusable templates for different types of technical content
+- **Content Templates**: Reusable templates for different types of technical content and lesson structures
+- **Bulk Operations**: Import/export workshops, batch content updates, and content migration tools
 
 ### Analytics & Metrics Platform
 
@@ -189,7 +293,19 @@ export const workshop = {
 - [ ] Collaborative features (comments, discussions)
 - [ ] Certificate generation upon completion
 
-## � Learnsing Journey & Challenges
+## 📚 Learning Journey & Challenges
+
+### YAML-Based Content Architecture
+
+The evolution from hardcoded JavaScript content to a flexible YAML-based system was a significant architectural shift. This required building a complete content service layer with caching, error handling, and dynamic loading capabilities. The biggest challenge was designing a block-based content system that could handle nested content while maintaining type safety and graceful error handling.
+
+**Key Learning**: Building a content management system taught me the importance of separation of concerns - keeping content structure separate from presentation logic enables much more flexible and maintainable applications.
+
+### Modular Content Block System
+
+Implementing 10+ different content block types (text, alerts, code, steps, quizzes, etc.) required deep understanding of React component composition and the Cloudscape design system. Each block needed to handle its own rendering logic while integrating seamlessly with the overall content renderer.
+
+**Key Challenge**: Ensuring consistent styling and behavior across all block types while allowing for block-specific functionality and nested content rendering.
 
 ### Cloudscape Design System Deep Dive
 
